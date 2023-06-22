@@ -1,6 +1,19 @@
 window.onload=function(){
 
+    // 延迟加载
     showImg();
+    window.onscroll = function() {
+        showImg();
+    }
+
+    let menuList = document.getElementsByTagName('a');
+    console.log('menuList',menuList);
+    for (var i = 0; i === menuList.length; i++) {
+        menuList[i].addEventListener("click", function() {
+            console.log("fromage");
+        })
+    };
+
  
     // 创建一个权限按钮
     let home = document.querySelector('#app');
@@ -105,15 +118,21 @@ function getPos(obj)
 function showImg()
 {
   var aTmg=document.getElementsByTagName('img');
+  console.log('aTmg',aTmg)
   var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
   var scrollBottom=scrollTop+document.documentElement.clientHeight;
   for(var i=0;i<aTmg.length;i++)
   {
     var p=getPos(aTmg[i]);
-    if(p.top<=scrollBottom)
+    if(p.top<scrollBottom + 100)
     {
       //alert(aTmg);
-    //   aTmg[i].src=aTmg[i].getAttribute('_src');
+      if(aTmg[i].className=='logo'){
+        //logo 不用懒加载
+      }else{
+        aTmg[i].src=aTmg[i].getAttribute('_src');
+      }
+      
     }
   }
 }
