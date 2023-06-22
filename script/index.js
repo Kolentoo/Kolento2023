@@ -14,7 +14,7 @@ window.onload=function(){
             // 点击链接后执行延迟加载
             setTimeout(function(){
                 showImg();
-            }, 600);
+            }, 300);
         }
     })
 
@@ -118,7 +118,7 @@ function getPos(obj){
   return {left: l, top: t};
 }
 function showImg(){
-    let cdn = 'https://cdn.jsdelivr.net/gh/kolentoo/kolento2023@master/'
+    let cdn = 'https://cdn.jsdelivr.net/gh/kolentoo/kolento2023@kolento/'
   var aTmg=document.getElementsByTagName('img');
   var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
   var scrollBottom=scrollTop+document.documentElement.clientHeight;
