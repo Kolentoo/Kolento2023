@@ -125,7 +125,7 @@ function showImg(){
   for(var i=0;i<aTmg.length;i++)
   {
     var p=getPos(aTmg[i]);
-    if(p.top<scrollBottom + 100)
+    if(p.top<scrollBottom + 200)
     {
       //alert(aTmg);
       if(aTmg[i].className=='logo'||aTmg[i].alt=='hero'){
@@ -133,7 +133,8 @@ function showImg(){
       }else{
         // console.log('aTmg[i]._src',aTmg[i].getAttribute('_src'))
         // 替换为cdn连接
-        aTmg[i].src=cdn+aTmg[i].getAttribute('_src').split('/kolento2023')[1];
+        aTmg[i].src=aTmg[i].getAttribute('_src')
+        // aTmg[i].src=cdn+aTmg[i].getAttribute('_src').split('/kolento2023')[1];
       }
       
     }
