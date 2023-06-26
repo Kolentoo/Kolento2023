@@ -14,11 +14,12 @@ window.onload=function(){
             // 点击链接后执行延迟加载
             setTimeout(function(){
                 showImg();
+                watchImg();
             }, 300);
         }
     })
 
-
+    
  
     // 创建一个权限按钮
     let home = document.querySelector('#app');
@@ -39,10 +40,10 @@ window.onload=function(){
 
     let item = document.querySelectorAll('.navbar .nav-item');
     let sideItem = document.querySelectorAll('.sidebar .nav-links .nav-item');
-    let work = item[2];
-    let life = item[3];
-    let mwork = sideItem[2];
-    let mlife = sideItem[3];
+    let work = item[3];
+    let life = item[4];
+    let mwork = sideItem[3];
+    let mlife = sideItem[4];
     let mode = localStorage.getItem('mode');
     if(mode){
         if(mode=='kolento'){
@@ -102,7 +103,9 @@ window.onload=function(){
         }
     }
     
-
+    addPop();
+    watchImg();
+    closeMask();
 };
 
 // 图片延迟加载
@@ -118,7 +121,9 @@ function getPos(obj){
   return {left: l, top: t};
 }
 function showImg(){
-    let cdn = 'https://cdn.jsdelivr.net/gh/kolentoo/kolento2023@kolento/'
+  //用了cdn还是慢 暂时舍弃了
+  let cdn = 'https://cdn.jsdelivr.net/gh/kolentoo/kolento2023@kolento/'
+
   var aTmg=document.getElementsByTagName('img');
   var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
   var scrollBottom=scrollTop+document.documentElement.clientHeight;
@@ -128,7 +133,7 @@ function showImg(){
     if(p.top<scrollBottom + 200)
     {
       //alert(aTmg);
-      if(aTmg[i].className=='logo'||aTmg[i].alt=='hero'){
+      if(aTmg[i].className=='logo'||aTmg[i].alt=='hero'||aTmg[i].className=='img-list'){
         //logo 不用懒加载
       }else{
         // console.log('aTmg[i]._src',aTmg[i].getAttribute('_src'))
@@ -139,4 +144,56 @@ function showImg(){
       
     }
   }
+}
+
+// 图片放大效果
+function watchImg(){
+    let aTmg=document.getElementsByTagName('img');
+    let imgList = document.getElementById('img-list');
+    let pop = document.getElementById("pop");
+    console.log('aTmg',aTmg)
+    let imgGroup = Array.prototype.slice.call( aTmg )
+    imgGroup.forEach(function(list,index){
+        imgGroup[index].onclick=function(){
+            console.log('点击事件',imgGroup[index].src)
+            pop.className='pop'
+
+            imgList.src=imgGroup[index].src;
+        }
+    })
+
+}
+
+function closeMask(){
+    let mask = document.getElementById("mask");
+    let pop = document.getElementById("pop");
+    mask.onclick=function(){
+        pop.className="pop hide"
+    }
+}
+
+// 添加图片弹窗
+function addPop(){
+    console.log('addPop')
+    let body = document.querySelector('body');
+    let pop = document.createElement("div");
+    pop.className="pop hide";
+    pop.id="pop";
+
+    let mask = document.createElement("div");
+    mask.className="mask";
+    mask.id="mask";
+
+    let imgBox = document.createElement("div");
+    let imgList = document.createElement("img");
+    imgList.setAttribute('src','');
+    imgBox.className='img-box'
+    imgList.className="img-list";
+    imgList.id="img-list"
+    
+    pop.append(mask);
+    mask.append(imgBox);
+    imgBox.append(imgList);
+    
+    body.append(pop);
 }
